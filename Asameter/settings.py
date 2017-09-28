@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'Asameter.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Asameter',
         'USER': 'postgres',
         'PASSWORD': 'butt',
