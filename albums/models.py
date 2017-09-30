@@ -20,7 +20,9 @@ class AsameterAlbums(models.Model):
     tt = models.TextField(db_column='TT', blank=True, null=True)  # Field name made lowercase.
     comments = models.TextField(db_column='Comments', blank=True, null=True)  # Field name made lowercase.
     explicit = models.TextField(db_column='Explicit', blank=True, null=True)  # Field name made lowercase.
-    release_date = models.DateField(db_column='Release Date', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    release_date = models.DateField(db_column='Release Date', blank=True, null=True)
+    redcolor=0
+    greencolor=0  # Field name made lowercase. Field renamed to remove unsuitable characters.
 
 
 

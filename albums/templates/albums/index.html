@@ -4,16 +4,43 @@
     <meta charset="UTF-8">
     <title>Asameter</title>
 </head>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+input[type=submit] {
+  font-family: "Avenir"
+}
+body {
+  font-family: "Avenir"
+}
+</style>
+<h1>Asa's Albums:</h1>
 <body>
-<h3>Here are all my albums</h3>
-{% if all_albums %}
-<ul>
-    {% for album in all_albums %}
-    <li><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-    <h3>You don't have any albums</h3>
-{% endif %}
+<!-- Sort by: <form action="{% url 'albums:index' %}" method="post" style="display:inline">
+    {% csrf_token %}
+    <input type="submit" value="Date Added"/>
+</form>
+<form action="{% url 'albums:sortfavorite' %}" method="post" style="display:inline">
+    {% csrf_token %}
+    <input type="submit" value="Mastery Score"/>
+</form> -->
+<table style="width:100%">
+  <tr>
+    <th><a href="{% url 'albums:sortalbum' %}">Album</a></th>
+    <th><a href="{% url 'albums:sortartist' %}">Artist</a></th>
+    <th><a href="{% url 'albums:sortgenre' %}">Genre</a></th>
+    <th><a href="{% url 'albums:sortfavorite' %}">Mastery Score</a></th>
+    <th><a href="{% url 'albums:index' %}">Date Added</a></th>
+  {% for album in all_albums %}
+  <tr>
+    <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.album}}</td>
+    <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.artist}}</td>
+    <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.genre}}</td>
+    <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.master_10}}</td>
+    <td width="14%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.date}}</td>
+  <tr>
+  {% endfor %}
+</table>
 </body>
 </html>
