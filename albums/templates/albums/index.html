@@ -12,9 +12,17 @@ input[type=submit] {
   font-family: "Avenir";
 }
 input[type=text] {
-  width= 130px;
-  -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out;
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 5px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
 }
 input[type=text]:focus {
   width: 100%;
@@ -25,7 +33,10 @@ body {
 </style>
 <center><h1>Asa's Albums:</h1></center>
 <body>
-<input type="text" name="search" placeholder="Search...">
+<form action="{% url 'albums:search' %}" method="post">
+  {% csrf_token %}
+  <input id="searchbar" type="text" name="searchbar" placeholder="Search albums, artist, genres, or ratings - separate multiple search terms with a semicolon">
+</form>
 <!-- Sort by: <form action="{% url 'albums:index' %}" method="post" style="display:inline">
     {% csrf_token %}
     <input type="submit" value="Date Added"/>
@@ -34,13 +45,14 @@ body {
     {% csrf_token %}
     <input type="submit" value="Mastery Score"/>
 </form> -->
+{% if all_albums %}
 <table style="width:100%">
   <tr>
     <th><a href="{% url 'albums:sortalbum' %}">Album</a></th>
     <th><a href="{% url 'albums:sortartist' %}">Artist</a></th>
     <th><a href="{% url 'albums:sortgenre' %}">Genre</a></th>
     <th><a href="{% url 'albums:sortfavorite' %}">Mastery Score</a></th>
-    <th><a href="{% url 'albums:index' %}">Date Added</a></th>
+    <th><a href="{% url 'albums:sortdate' %}">Date Added</a></th>
   {% for album in all_albums %}
   <tr>
     <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)"><a href="{% url 'albums:detail' album.name_no_spaces %}">{{album.album}}</a></td>
@@ -51,5 +63,11 @@ body {
   <tr>
   {% endfor %}
 </table>
+  {% if search_term %}
+    <center><a href="{% url 'albums:index' %}"> &#8617 to full album list</a></center>
+  {% endif %}
+{% else %}
+<p>Sorry! There were no results for "{{ search_term }}"—try searching something else, or <a href="{% url 'albums:index' %}">return to all of Asa's Albums</a></p>
+{% endif %}
 </body>
 </html>

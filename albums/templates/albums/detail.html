@@ -21,7 +21,11 @@ body {
 <b>Date Listened to by Asa:</b> {{specific_album.date}}<br>
 <b>Favorite Songs:</b> {{specific_album.tt}}<br>
 <b>Asa's Comments:</b> {{specific_album.comments}} <br> <br>
-<a href="{% url 'albums:index' %}"> &#8617 to full album list</a>
+{% if search_term %}
+&#8617 to <a href="{% url 'albums:search' %}">search results</a> or <a href="{% url 'albums:index' %}">all of Asa's albums</a>
+{% else %}
+<a href="{% url 'albums:index' %}">&#8617 to all of Asa's albums</a>
+{% endif %}
 </center>
 </body>
 </html>
