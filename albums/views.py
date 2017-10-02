@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import AsameterAlbums
 
 def index(request):
@@ -10,6 +10,7 @@ def index(request):
         album.album=album.album.capitalize()
         album.artist=album.artist.capitalize()
         album.genre=album.genre.capitalize()
+        album.name_no_spaces=album.album.replace(" ","-")
         if album.master_10<=5:
             album.redcolor=int(255)
             album.greencolor=int(album.master_10*51)
@@ -25,6 +26,7 @@ def sortfavorite(request):
         album.album=album.album.capitalize()
         album.artist=album.artist.capitalize()
         album.genre=album.genre.capitalize()
+        album.name_no_spaces=album.album.replace(" ","-")
         if album.master_10<=5:
             album.redcolor=int(255)
             album.greencolor=int(album.master_10*51)
@@ -41,6 +43,7 @@ def sortalbum(request):
         album.album=album.album.capitalize()
         album.artist=album.artist.capitalize()
         album.genre=album.genre.capitalize()
+        album.name_no_spaces=album.album.replace(" ","-")
         if album.master_10<=5:
             album.redcolor=int(255)
             album.greencolor=int(album.master_10*51)
@@ -57,6 +60,7 @@ def sortartist(request):
         album.album=album.album.capitalize()
         album.artist=album.artist.capitalize()
         album.genre=album.genre.capitalize()
+        album.name_no_spaces=album.album.replace(" ","-")
         if album.master_10<=5:
             album.redcolor=int(255)
             album.greencolor=int(album.master_10*51)
@@ -73,6 +77,7 @@ def sortgenre(request):
         album.album=album.album.capitalize()
         album.artist=album.artist.capitalize()
         album.genre=album.genre.capitalize()
+        album.name_no_spaces=album.album.replace(" ","-")
         if album.master_10<=5:
             album.redcolor=int(255)
             album.greencolor=int(album.master_10*51)
@@ -82,4 +87,8 @@ def sortgenre(request):
     all_albums_sorted=sorted(all_albums, key=lambda x: x.genre)
     context={'all_albums': all_albums_sorted}
     return render(request, 'albums/index.html', context)
+
+def detail(request, selected_album):
+    specific_album=get_object_or_404(AsameterAlbums, album__iexact=selected_album.replace("-"," "))
+    return render(request, 'albums/detail.html', {'specific_album': specific_album})
 # Create your views here.

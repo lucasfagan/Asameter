@@ -23,6 +23,7 @@ class AsameterAlbums(models.Model):
     release_date = models.DateField(db_column='Release Date', blank=True, null=True)
     redcolor=0
     greencolor=0
+    name_no_spaces=""
 
 
 

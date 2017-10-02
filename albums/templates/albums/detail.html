@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{specific_album.album}}</title>
+</head>
+<style>
+body {
+  font-family: "Avenir";
+  font-size: 30px;
+}
+
+</style>
+<body>
+<center>
+<h2><u>{{specific_album.album}}</u></h2>
+<b>Artist:</b> {{specific_album.artist}}<br>
+<b>Genre:</b> {{specific_album.genre}}<br>
+<b>Mastery Score (out of 10):</b> {{specific_album.master_10}}<br>
+<b>Release Date:</b> {{specific_album.release_date}}<br>
+<b>Date Listened to by Asa:</b> {{specific_album.date}}<br>
+<b>Favorite Songs:</b> {{specific_album.tt}}<br>
+<b>Asa's Comments:</b> {{specific_album.comments}} <br> <br>
+<a href="{% url 'albums:index' %}"> &#8617 to full album list</a>
+</center>
+</body>
+</html>

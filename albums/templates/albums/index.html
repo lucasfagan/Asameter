@@ -23,7 +23,7 @@ body {
   font-family: "Avenir"
 }
 </style>
-<h1>Asa's Albums:</h1>
+<center><h1>Asa's Albums:</h1></center>
 <body>
 <input type="text" name="search" placeholder="Search...">
 <!-- Sort by: <form action="{% url 'albums:index' %}" method="post" style="display:inline">
@@ -43,7 +43,7 @@ body {
     <th><a href="{% url 'albums:index' %}">Date Added</a></th>
   {% for album in all_albums %}
   <tr>
-    <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.album}}</td>
+    <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)"><a href="{% url 'albums:detail' album.name_no_spaces %}">{{album.album}}</a></td>
     <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.artist}}</td>
     <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.genre}}</td>
     <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.master_10}}</td>
