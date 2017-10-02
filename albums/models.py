@@ -22,7 +22,7 @@ class AsameterAlbums(models.Model):
     explicit = models.TextField(db_column='Explicit', blank=True, null=True)  # Field name made lowercase.
     release_date = models.DateField(db_column='Release Date', blank=True, null=True)
     redcolor=0
-    greencolor=0  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    greencolor=0
 
 
 

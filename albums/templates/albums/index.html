@@ -9,7 +9,15 @@ table, th, td {
   border: 1px solid black;
 }
 input[type=submit] {
-  font-family: "Avenir"
+  font-family: "Avenir";
+}
+input[type=text] {
+  width= 130px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+input[type=text]:focus {
+  width: 100%;
 }
 body {
   font-family: "Avenir"
@@ -17,6 +25,7 @@ body {
 </style>
 <h1>Asa's Albums:</h1>
 <body>
+<input type="text" name="search" placeholder="Search...">
 <!-- Sort by: <form action="{% url 'albums:index' %}" method="post" style="display:inline">
     {% csrf_token %}
     <input type="submit" value="Date Added"/>
