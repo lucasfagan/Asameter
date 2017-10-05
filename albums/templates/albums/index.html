@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>Asameter</title>
 </head>
+<script>
+// When the user clicks on <div>, open the popup
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
+</script>
 <style>
+
 table, th, td {
   border: 1px solid black;
 }
@@ -12,7 +20,7 @@ input[type=submit] {
   font-family: "Avenir";
 }
 input[type=text] {
-    width: 130px;
+    width: 97px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -25,18 +33,33 @@ input[type=text] {
     transition: width 0.4s ease-in-out;
 }
 input[type=text]:focus {
-  width: 100%;
+  width: 80%;
 }
 body {
-  font-family: "Avenir"
+  font-family: "Avenir";
+  background-image: url("https://s-media-cache-ak0.pinimg.com/originals/28/e9/2c/28e92c4ca494f3e611fd94f95cec4b29.jpg");
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-top: 0px;
+}
+h2 {
+  font-family: "Phosphate";
+  font-size: 350%;
+}
+.bigger {
+  font-size: 200%;
 }
 </style>
-<center><h1>Asa's Albums:</h1></center>
 <body>
-<form action="{% url 'albums:search' %}" method="post">
+
+<center>
+<h2>Asameter</h2>
+<form action="{% url 'albums:search' %}" method="post" style="display:inline">
   {% csrf_token %}
-  <input id="searchbar" type="text" name="searchbar" placeholder="Search albums, artist, genres, or ratings - separate multiple search terms with a semicolon">
-</form>
+  <input id="searchbar" type="text" name="searchbar" placeholder="Search... albums, artist, genres, or ratings - separate multiple search terms with a semicolon">
+</form><br><br>
+</center>
 <!-- Sort by: <form action="{% url 'albums:index' %}" method="post" style="display:inline">
     {% csrf_token %}
     <input type="submit" value="Date Added"/>
@@ -46,7 +69,7 @@ body {
     <input type="submit" value="Mastery Score"/>
 </form> -->
 {% if all_albums %}
-<table style="width:100%">
+<table style="width:100%" bgcolor="White">
   <tr>
     <th><a href="{% url 'albums:sortalbum' %}">Album</a></th>
     <th><a href="{% url 'albums:sortartist' %}">Artist</a></th>
@@ -69,5 +92,6 @@ body {
 {% else %}
 <p>Sorry! There were no results for "{{ search_term }}"—try searching something else, or <a href="{% url 'albums:index' %}">return to all of Asa's Albums</a></p>
 {% endif %}
+
 </body>
 </html>

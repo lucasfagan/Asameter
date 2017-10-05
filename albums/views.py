@@ -10,6 +10,8 @@ globalsearchterm=""
 def index(request):
     global globaldata
     globaldata=AsameterAlbums.objects.all()
+    global globalsearchterm
+    globalsearchterm=""
     all_albums=globaldata
     for album in all_albums:
         album.album=album.album.capitalize()
@@ -25,6 +27,7 @@ def index(request):
     context={'all_albums': all_albums}
     return render(request, 'albums/index.html', context)
 
+#if no search, this is the same as index (because it is automatically sorted by date)
 def sortdate(request):
     all_albums=globaldata
     for album in all_albums:
@@ -113,7 +116,7 @@ def sortgenre(request):
 def detail(request, selected_album):
     specific_album=get_object_or_404(AsameterAlbums, album__iexact=selected_album.replace("-"," "))
     context={}
-    if globaldata!=AsameterAlbums.objects.all():
+    if globalsearchterm!="":
         context['search_term']=globalsearchterm
     context['specific_album']=specific_album
     return render(request, 'albums/detail.html', context)
@@ -146,6 +149,9 @@ def search(request):
             album.redcolor=int((10-album.master_10)*51)
             album.greencolor=int(255)
     context['all_albums']=globaldata
-    return render(request, 'albums/index.html', context) #refined_data3+refined_data4+refined_data5+refined_data6+refined_data7+refined_data8})
+    return render(request, 'albums/index.html', context)
 
+def main(request):
+    context={}
+    return render(request, 'albums/main.html', context)
 # Create your views here.
