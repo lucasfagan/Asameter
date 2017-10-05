@@ -5,17 +5,107 @@
     <title>Asameter</title>
 </head>
 <script>
-// When the user clicks on <div>, open the popup
-function myFunction() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
-}
+
 </script>
 <style>
+a.nav-link:link
+{
+   color: #000000;
+   text-decoration: none;
+}
+a.nav-link:visited
+{
+   color: #000000;
+   text-decoration: none;
+}
+a.nav-link:hover
+{
+   color: #000000;
+   text-decoration: none;
+}
+a.nav-link:active
+{
+   color: #000000;
+   text-decoration: none;
+}
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
 
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 0.5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
 table, th, td {
   border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
 }
+
 input[type=submit] {
   font-family: "Avenir";
 }
@@ -47,6 +137,9 @@ h2 {
   font-family: "Phosphate";
   font-size: 350%;
 }
+h3 {
+  font-size: 20px;
+}
 .bigger {
   font-size: 200%;
 }
@@ -54,10 +147,24 @@ h2 {
 <body>
 
 <center>
-<h2>Asameter</h2>
+<a class="nav-link" href="#popup1"><h2>Asameter</h2></a>
+<div id="popup1" class="overlay">
+  <div class="popup">
+  	<h2>Help</h2>
+  	<a class="close" href="#">&times;</a>
+  	<div class="content">
+  		See below all the albums that Asa has listened to. The greener the row, the more Asa liked it. <br><br>
+      <b>Some things you can do:</b>
+        <br><br>Click on an album to view details
+        <br><br>Search albums, artists, genres, and scores using the search  bar
+        <br><br>Search specifically within albums, artists, genres, or scores by using the syntax "modifer:searchterm"
+        <br><br>Click on a column heading to sort, and click again to reverse the order of sorting.
+  	</div>
+  </div>
+</div>
 <form action="{% url 'albums:search' %}" method="post" style="display:inline">
   {% csrf_token %}
-  <input id="searchbar" type="text" name="searchbar" placeholder="Search... albums, artist, genres, or ratings - separate multiple search terms with a semicolon">
+  <input id="searchbar" type="text" name="searchbar" placeholder="Search... everything, or use a modifier (e.g. 'artist:pink floyd')">
 </form><br><br>
 </center>
 <!-- Sort by: <form action="{% url 'albums:index' %}" method="post" style="display:inline">
@@ -74,15 +181,15 @@ h2 {
     <th><a href="{% url 'albums:sortalbum' %}">Album</a></th>
     <th><a href="{% url 'albums:sortartist' %}">Artist</a></th>
     <th><a href="{% url 'albums:sortgenre' %}">Genre</a></th>
-    <th><a href="{% url 'albums:sortfavorite' %}">Mastery Score</a></th>
+    <th><a href="{% url 'albums:sortfavorite' %}">Music Score</a></th>
     <th><a href="{% url 'albums:sortdate' %}">Date Added</a></th>
   {% for album in all_albums %}
   <tr>
     <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)"><a href="{% url 'albums:detail' album.name_no_spaces %}">{{album.album}}</a></td>
     <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.artist}}</td>
     <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.genre}}</td>
-    <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.master_10}}</td>
-    <td width="14%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.date}}</td>
+    <td width="14%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.music_10}}</td>
+    <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.date}}</td>
   <tr>
   {% endfor %}
 </table>
@@ -90,7 +197,11 @@ h2 {
     <center><a href="{% url 'albums:index' %}"> &#8617 to full album list</a></center>
   {% endif %}
 {% else %}
-<p>Sorry! There were no results for "{{ search_term }}"—try searching something else, or <a href="{% url 'albums:index' %}">return to all of Asa's Albums</a></p>
+  {% if modifier %}
+    <center><h3>Sorry! There were no results for "{{ search_term }}" in {{modifier}}s—try searching something else, or <a href="{% url 'albums:index' %}">return to all of Asa's Albums</a></h3></center>
+  {% else %}
+    <center><h3>Sorry! There were no results for "{{ search_term }}"—try searching something else, or <a href="{% url 'albums:index' %}">return to all of Asa's Albums</a></h3></center>
+  {% endif %}
 {% endif %}
 
 </body>
