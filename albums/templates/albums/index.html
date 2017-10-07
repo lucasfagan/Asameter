@@ -28,6 +28,26 @@ a.nav-link:active
    color: #000000;
    text-decoration: none;
 }
+a.nav-link2:link
+{
+   color: #FFFFFF;
+   text-decoration: none;
+}
+a.nav-link2:visited
+{
+   color: #FFFFFF;
+   text-decoration: none;
+}
+a.nav-link2:hover
+{
+   color: #FFFFFF;
+   text-decoration: none;
+}
+a.nav-link2:active
+{
+   color: #FFFFFF;
+   text-decoration: none;
+}
 .box {
   width: 40%;
   margin: 0 auto;
@@ -104,6 +124,7 @@ table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
   padding: 5px;
+  color: white;
 }
 
 input[type=submit] {
@@ -154,11 +175,11 @@ h3 {
   	<a class="close" href="#">&times;</a>
   	<div class="content">
   		See below all the albums that Asa has listened to. The greener the row, the more Asa liked it. <br><br>
-      <b>Some things you can do:</b>
-        <br><br>Click on an album to view details
-        <br><br>Search albums, artists, genres, and scores using the search  bar
-        <br><br>Search specifically within albums, artists, genres, or scores by using the syntax "modifer:searchterm"
-        <br><br>Click on a column heading to sort, and click again to reverse the order of sorting.
+      <b>Searching the Asameter uses the following syntax:</b>
+        <br>To search a single term in Albums, Artists, Genres, and Scores, just search "term"
+        <br>To search within a single category, use: "modifier:term", where modifier is either "Album","Artist","Genre", or "Score"
+        <br>To search multiple terms or modifiers, separate with a semicolon. Ex: "Genre:pop; score:10"
+        <br>To require that results meet all search terms and modifiers, include "[and]" at the end of the search
   	</div>
   </div>
 </div>
@@ -185,11 +206,11 @@ h3 {
     <th><a href="{% url 'albums:sortdate' %}">Date Added</a></th>
   {% for album in all_albums %}
   <tr>
-    <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)"><a href="{% url 'albums:detail' album.name_no_spaces %}">{{album.album}}</a></td>
-    <td width="25%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.artist}}</td>
-    <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.genre}}</td>
-    <td width="14%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.music_10}}</td>
-    <td width="18%" style="background-color: rgb({{album.redcolor}},{{album.greencolor}},0)">{{album.date}}</td>
+    <td width="32%" style="background-color: rgba({{album.redcolor}},0,{{album.greencolor}},1)"><a class="nav-link2" href="{% url 'albums:detail' album.name_no_spaces %}"><u>{{album.album}}</u></a></td>
+    <td width="23%" style="background-color: rgba({{album.redcolor}},0,{{album.greencolor}},1)">{{album.artist}}</td>
+    <td width="15%" style="background-color: rgba({{album.redcolor}},0,{{album.greencolor}},1)">{{album.genre}}</td>
+    <td width="14%" style="background-color: rgba({{album.redcolor}},0,{{album.greencolor}},1)">{{album.music_10}}</td>
+    <td width="16%" style="background-color: rgba({{album.redcolor}},0,{{album.greencolor}},1)">{{album.date}}</td>
   <tr>
   {% endfor %}
 </table>
